@@ -6,7 +6,8 @@
   "scripts": {
     "lint": "eslint --fix --cache .",
     "format": "prettier --write --cache .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky install"
   },
   "keywords": [],
   "author": "",
@@ -20,6 +21,7 @@
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.1",
+    "husky": "^8.0.3",
     "prettier": "^3.0.3",
     "source-map-loader": "^4.0.1",
     "ts-loader": "^9.5.0",
