@@ -7,5 +7,24 @@
   "trailingComma": "all",
   "bracketSpacing": true,
   "arrowParens": "avoid",
-  "parser": "typescript"
+  "overrides": [
+    {
+      "files": ["*.mjs", "*.cjs", "*.js"],
+      "options": {
+        "parser": "babel"
+      }
+    },
+    {
+      "files": ["*.mts", "*.cts", "*.ts"],
+      "options": {
+        "parser": "babel-ts"
+      }
+    },
+    {
+      "files": ["*.json", "*.jsonc", "*.json5"],
+      "options": {
+        "parser": "json5"
+      }
+    }
+  ]
 }
