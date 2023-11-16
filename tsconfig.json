@@ -1,10 +1,23 @@
 {
   "compilerOptions": {
-    "outDir": "./dist/",
-    "sourceMap": true,
-    "noImplicitAny": true,
-    "module": "commonjs",
-    "target": "es6",
-    "jsx": "react"
+    "esModuleInterop": true, // import 시 * as 안붙이고 가져오도록 함
+    "sourceMap": true, // 에러난 위치를 찾기 편함
+    "lib": ["ES2020", "DOM"],
+    "jsx": "react",
+    "module": "esnext", // 최신 es 사용
+    "moduleResolution": "Node", // 최신 es 노드가 읽도록 함
+    "target": "es5", // es5로 변환
+    "strict": true, // 엄격한 타입 체크
+    "resolveJsonModule": true, // json을 import 하는 것 허용
+    "noImplicitAny": true, // 의도치 않은 any 방지
+    // 절대경로 import
+    "baseUrl": ".",
+    "paths": {
+      "@hooks/*": ["hooks/*"],
+      "@components/*": ["components/*"],
+      "@layouts'*": ["layouts/*"],
+      "@utils/*": ["utils/*"],
+      "@typings/*": ["typings/*"]
+    }
   }
 }
