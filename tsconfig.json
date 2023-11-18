@@ -11,13 +11,22 @@
     "resolveJsonModule": true, // json을 import 하는 것 허용
     "noImplicitAny": true, // 의도치 않은 any 방지
     // 절대경로 import
-    "baseUrl": ".",
+    "baseUrl": "./src",
     "paths": {
+      "@/*": ["*"],
       "@hooks/*": ["hooks/*"],
       "@components/*": ["components/*"],
       "@layouts'*": ["layouts/*"],
       "@utils/*": ["utils/*"],
       "@typings/*": ["typings/*"]
+    }
+  },
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS",
+      "moduleResolution": "Node",
+      "target": "ES5",
+      "esModuleInterop": true
     }
   }
 }

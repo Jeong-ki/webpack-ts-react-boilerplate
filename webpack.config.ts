@@ -11,18 +11,20 @@ interface Configuration extends WebpackConfiguration {
 const isDevelopment = process.env.NODE_ENV !== "production";
 
 const config: Configuration = {
-  name: "boilerplate",
+  name: "webpack-ts-react-boilerplate",
   mode: isDevelopment ? "development" : "production",
   devtool: !isDevelopment ? "hidden-source-map" : "inline-source-map",
   resolve: {
-    extensions: [".js", ".jsx", ".ts", ".tsx", ".json"],
+    extensions: [".tsx", ".ts", ".js", ".jsx", ".json"],
+    // mainFields: ["browser", "module", "main"],
     alias: {
-      "@hooks": path.resolve(__dirname, "hooks"),
-      "@components": path.resolve(__dirname, "components"),
-      "@layouts": path.resolve(__dirname, "layouts"),
-      "@pages": path.resolve(__dirname, "pages"),
-      "@utils": path.resolve(__dirname, "utils"),
-      "@typings": path.resolve(__dirname, "typings"),
+      "@": path.resolve(__dirname, "src"),
+      "@hooks": path.resolve(__dirname, "src/hooks"),
+      "@components": path.resolve(__dirname, "src/components"),
+      "@layouts": path.resolve(__dirname, "src/layouts"),
+      "@pages": path.resolve(__dirname, "src/pages"),
+      "@utils": path.resolve(__dirname, "src/utils"),
+      "@typings": path.resolve(__dirname, "src/typings"),
     },
   },
   entry: {
@@ -36,20 +38,21 @@ const config: Configuration = {
         loader: "babel-loader",
         options: {
           presets: [
-            "@babel/preset-env",
-            {
-              targets: { browsers: ["IE 10"] },
-              debug: isDevelopment,
-            },
+            [
+              "@babel/preset-env",
+              {
+                targets: { browsers: ["IE 10"] },
+                debug: isDevelopment,
+                useBuiltIns: "usage",
+                corejs: 3,
+              },
+            ],
             "@babel/preset-react",
             "@babel/preset-typescript",
           ],
           env: {
             development: {
-              plugins: [
-                [{ sourceMap: true }],
-                require.resolve("react-refresh/babel"),
-              ],
+              plugins: [require.resolve("react-refresh/babel")],
             },
           },
         },
@@ -63,6 +66,9 @@ const config: Configuration = {
   plugins: [
     new ForkTsCheckerWebpackPlugin({
       async: false,
+      // eslint: {
+      //   files: "./src/**/*",
+      // },
     }),
     new webpack.EnvironmentPlugin({
       NODE_ENV: isDevelopment ? "development" : "production",
@@ -75,21 +81,23 @@ const config: Configuration = {
   },
   devServer: {
     historyApiFallback: true,
-    port: 3090,
+    port: 3000,
+    open: true,
+    hot: true,
     devMiddleware: { publicPath: "/dist/" },
     static: { directory: path.resolve(__dirname) },
     proxy: {
       "/api/": {
-        target: "http://localhost:3095",
+        target: "http://localhost:3005",
         changeOrigin: true,
-        ws: true,
+        // ws: true,
       },
     },
   },
 };
 
 if (isDevelopment && config.plugins) {
-  config.plugins.push(new webpack.HotModuleReplacementPlugin());
+  // config.plugins.push(new webpack.HotModuleReplacementPlugin());
   config.plugins.push(
     new ReactRefreshWebpackPlugin({
       overlay: {
